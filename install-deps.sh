@@ -20,12 +20,12 @@ while [ -n "${open[*]}" ]; do
       contains=false
       
       for dep3 in "${closed[@]}"; do
-        if [[ $dep3 == "$dep2" ]]; then
+        if [[ "$dep3" == "$dep2" ]]; then
           contains=true
         fi
       done
       
-      if ! [[ $contains ]]; then
+      if ! [[ "$contains" == true ]]; then
         new+=("$dep2")
       fi
     done < /tmp/"$dep1"/deps.txt
