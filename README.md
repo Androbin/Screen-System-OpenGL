@@ -4,4 +4,5 @@
 Dependencies:
  - App Shell
  - App Shell - OpenGL
+ - LWJGL
  - Screen System
