@@ -4,11 +4,11 @@ import static org.lwjgl.opengl.GL11.*;
 import de.androbin.shell.gfx.*;
 import org.lwjgl.opengl.*;
 
-public final class OpenGLSlideTransition extends OpenGLTransition {
+public final class GLSlideTransition extends GLTransition {
   private final int dx;
   private final int dy;
   
-  public OpenGLSlideTransition( final int dx, final int dy,
+  public GLSlideTransition( final int dx, final int dy,
       final float crossing, final float duration ) {
     super( crossing, duration );
     
@@ -17,7 +17,7 @@ public final class OpenGLSlideTransition extends OpenGLTransition {
   }
   
   @ Override
-  public void render( final OpenGLGraphics graphics0, final OpenGLGraphics graphics1 ) {
+  public void render( final GLGraphics graphics0, final GLGraphics graphics1 ) {
     final float time = getTime();
     final float progress;
     
@@ -28,20 +28,28 @@ public final class OpenGLSlideTransition extends OpenGLTransition {
     }
     
     render( graphics0, progress );
+    glLoadIdentity();
     render( graphics1, progress - 1f );
   }
   
-  private void render( final OpenGLGraphics graphics, final float progress ) {
+  private void render( final GLGraphics graphics, final float progress ) {
     if ( graphics == null ) {
       return;
     }
     
-    final float x = dx * progress * Display.getWidth();
-    final float y = dy * progress * Display.getHeight();
+    final int width = Display.getWidth();
+    final int height = Display.getHeight();
     
-    glPushMatrix();
+    final float x = dx * progress * width;
+    final float y = dy * progress * height;
+    
+    glPushAttrib( GL_SCISSOR_BIT );
+    glScissor( 0, 0, width, height );
     glTranslatef( x, y, 0f );
+    glPushMatrix();
     graphics.render();
     glPopMatrix();
+    glTranslatef( -x, -y, 0f );
+    glPopAttrib();
   }
 }

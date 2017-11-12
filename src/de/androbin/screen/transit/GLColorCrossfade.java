@@ -5,17 +5,17 @@ import de.androbin.shell.gfx.*;
 import java.awt.*;
 import org.lwjgl.opengl.*;
 
-public final class OpenGLColorCrossfade extends OpenGLTransition {
+public final class GLColorCrossfade extends GLTransition {
   private final float red;
   private final float green;
   private final float blue;
   
-  public OpenGLColorCrossfade( final Color color, final float crossing, final float duration ) {
+  public GLColorCrossfade( final Color color, final float crossing, final float duration ) {
     this( color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f,
         crossing, duration );
   }
   
-  public OpenGLColorCrossfade( final float red, final float green, final float blue,
+  public GLColorCrossfade( final float red, final float green, final float blue,
       final float crossing, final float duration ) {
     super( crossing, duration );
     
@@ -25,7 +25,7 @@ public final class OpenGLColorCrossfade extends OpenGLTransition {
   }
   
   @ Override
-  public void render( final OpenGLGraphics graphics0, final OpenGLGraphics graphics1 ) {
+  public void render( final GLGraphics graphics0, final GLGraphics graphics1 ) {
     final float time = getTime();
     final float alpha;
     
@@ -36,6 +36,8 @@ public final class OpenGLColorCrossfade extends OpenGLTransition {
       render( graphics1 );
       alpha = ( duration - time ) / ( duration - crossing );
     }
+    
+    glLoadIdentity();
     
     glColor4f( red, green, blue, alpha );
     
@@ -50,13 +52,11 @@ public final class OpenGLColorCrossfade extends OpenGLTransition {
     glEnd();
   }
   
-  private void render( final OpenGLGraphics graphics ) {
+  private void render( final GLGraphics graphics ) {
     if ( graphics == null ) {
       return;
     }
     
-    glPushMatrix();
     graphics.render();
-    glPopMatrix();
   }
 }
