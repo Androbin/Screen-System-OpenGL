@@ -5,7 +5,7 @@ import de.androbin.screen.transit.*;
 import de.androbin.shell.*;
 import de.androbin.shell.gfx.*;
 
-public class GLScreenManager extends SmoothScreenManager<GLTransition> implements GLGraphics {
+public class GLScreenManager extends SimpleSmoothScreenManager<GLTransition> implements GLGraphics {
   @ Override
   public void render() {
     glLoadIdentity();

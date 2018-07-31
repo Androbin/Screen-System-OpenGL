@@ -8,24 +8,26 @@ public final class GLSlideTransition extends GLTransition {
   private final int dx;
   private final int dy;
   
-  public GLSlideTransition( final int dx, final int dy,
-      final float crossing, final float duration ) {
-    super( crossing, duration );
+  public GLSlideTransition( final int dx, final int dy, final float duration ) {
+    super( duration );
     
     this.dx = dx;
     this.dy = dy;
   }
   
   @ Override
+  public float getPauseTime() {
+    return 0.5f * duration;
+  }
+  
+  @ Override
+  public float getResumeTime() {
+    return 0.5f * duration;
+  }
+  
+  @ Override
   public void render( final GLGraphics graphics0, final GLGraphics graphics1 ) {
-    final float time = getTime();
-    final float progress;
-    
-    if ( time < crossing ) {
-      progress = 0.5f * time / crossing;
-    } else {
-      progress = 0.5f + 0.5f * ( time - crossing ) / ( duration - crossing );
-    }
+    final float progress = getTime() / duration;
     
     render( graphics0, progress );
     glLoadIdentity();

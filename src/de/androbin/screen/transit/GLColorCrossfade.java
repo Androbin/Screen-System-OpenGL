@@ -6,6 +6,8 @@ import java.awt.*;
 import org.lwjgl.opengl.*;
 
 public final class GLColorCrossfade extends GLTransition {
+  private final float crossing;
+  
   private final float red;
   private final float green;
   private final float blue;
@@ -17,11 +19,23 @@ public final class GLColorCrossfade extends GLTransition {
   
   public GLColorCrossfade( final float red, final float green, final float blue,
       final float crossing, final float duration ) {
-    super( crossing, duration );
+    super( duration );
+    
+    this.crossing = crossing;
     
     this.red = red;
     this.green = green;
     this.blue = blue;
+  }
+  
+  @ Override
+  public float getPauseTime() {
+    return crossing;
+  }
+  
+  @ Override
+  public float getResumeTime() {
+    return crossing;
   }
   
   @ Override
